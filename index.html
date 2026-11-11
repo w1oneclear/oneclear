@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" translate="no">
 <head>
 <meta charset="utf-8">
+<meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>W1 OneClear | 관세법인 더블유</title>
 <meta name="description" content="관세법인 더블유가 고객사를 위해 설계한 맞춤 플랫폼, W1 OneClear">
@@ -23,7 +24,8 @@
   [hidden]{display:none!important}
 
   /* 로그인 화면 */
-  .login{min-height:100vh;display:flex;flex-wrap:wrap}
+  .login{min-height:100vh;display:flex;flex-direction:column}
+  .split{flex:1 1 auto;display:flex;flex-wrap:wrap}
   .hero{flex:1 1 520px;min-width:0;background:var(--navy);color:#fff;display:flex;flex-direction:column;justify-content:space-between;gap:48px;padding:64px 72px;position:relative;overflow:hidden}
   .hero .deco{position:absolute;top:-60px;right:-120px;width:520px;opacity:.12;pointer-events:none}
   .hero .logo{width:220px;position:relative}
@@ -42,7 +44,7 @@
   .status.error{background:#FCE4E4;color:#8A1C12}
   .contact{border-top:1px solid #E6ECEF;padding-top:20px;display:flex;flex-direction:column;gap:6px;font-size:14px}
   .contact strong{color:var(--body);font-weight:500}
-  footer{flex:1 1 100%;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding:20px 72px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);background:#fff}
+  footer{flex:0 0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding:20px 72px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);background:#fff}
   details summary{cursor:pointer;color:var(--teal-text)}
   details p{max-width:720px;line-height:1.7;margin:8px 0 0}
 
@@ -90,6 +92,7 @@
 
 <!-- ① 로그인 -->
 <section id="view-login" class="login" aria-labelledby="login-title">
+  <div class="split">
   <div class="hero">
     <img class="deco" src="assets/w1-symbol.svg" alt="" aria-hidden="true">
     <img class="logo" src="assets/w1-oneclear-white.svg" alt="W1 OneClear">
@@ -115,6 +118,7 @@
       </div>
     </div>
   </div>
+  </div>
   <footer>
     <span>© 관세법인 더블유 · W1 OneClear · <a href="privacy.html">개인정보처리방침</a></span>
     <details>
@@ -125,7 +129,7 @@
 </section>
 
 <!-- ② 시스템 선택 -->
-<section id="view-systems" hidden aria-labelledby="sys-title">
+<section id="view-systems" hidden aria-labelledby="sys-title" style="min-height:100vh;display:flex;flex-direction:column">
   <header class="topbar">
     <img src="assets/w1-oneclear-white.svg" alt="W1 OneClear">
     <div class="who">
@@ -133,7 +137,7 @@
       <button type="button" class="btn-ghost" data-action="logout">로그아웃</button>
     </div>
   </header>
-  <main class="wrap">
+  <main class="wrap" style="flex:1 1 auto">
     <div>
       <h1 id="sys-title">안녕하세요, <span id="who-name"></span> 님</h1>
       <p class="sub"><span id="who-company"></span>이용 권한이 있는 플랫폼을 선택해 주세요.</p>
