@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>W1 OneClear | 관세법인 더블유</title>
+<meta name="description" content="관세법인 더블유가 고객사를 위해 설계한 맞춤 플랫폼, W1 OneClear">
+<link rel="icon" type="image/svg+xml" href="assets/w1-symbol.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+  :root{
+    --navy:#0F2A3A; --teal:#44C1C1; --teal-text:#1A6F70; --mint:#7FD6D6;
+    --ink:#1E2226; --body:#3E464D; --muted:#5A636B; --line:#DDE4E8; --bg:#F4F7F8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{font-family:'Noto Sans KR',system-ui,sans-serif;color:var(--body);background:var(--bg);word-break:keep-all;overflow-wrap:break-word}
+  a{color:var(--teal-text)} a:hover{color:var(--navy)}
+  .en{font-family:Barlow,sans-serif}
+  [hidden]{display:none!important}
+
+  /* 로그인 화면 */
+  .login{min-height:100vh;display:flex;flex-wrap:wrap}
+  .hero{flex:1 1 520px;min-width:0;background:var(--navy);color:#fff;display:flex;flex-direction:column;justify-content:space-between;gap:48px;padding:64px 72px;position:relative;overflow:hidden}
+  .hero .deco{position:absolute;top:-60px;right:-120px;width:520px;opacity:.12;pointer-events:none}
+  .hero .logo{width:220px;position:relative}
+  .hero .copy{display:flex;flex-direction:column;gap:20px;max-width:640px;position:relative}
+  .eyebrow{margin:0;font-family:Barlow,sans-serif;font-weight:600;font-size:15px;letter-spacing:.14em;color:var(--mint)}
+  .hero h1{margin:0;font-size:clamp(28px,2.6vw,38px);line-height:1.32;font-weight:700}
+  .hero p.lead{margin:0;font-size:17px;line-height:1.7;color:#C9D6DD}
+  .hero .sign{margin:0;padding-top:20px;border-top:1px solid #2A4757;font-size:14px;color:#A9BBC5;position:relative}
+  .panel{flex:1 1 480px;min-width:0;display:flex;align-items:center;justify-content:center;padding:64px 32px}
+  .card{width:100%;max-width:420px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:48px 40px;display:flex;flex-direction:column;gap:28px}
+  .card .logo{width:160px}
+  .card h2{margin:0;font-size:26px;color:var(--ink)}
+  .card p{margin:0;font-size:15px;line-height:1.6;color:var(--muted)}
+  #gbtn{min-height:44px;display:flex;justify-content:center}
+  .status{font-size:14px;line-height:1.6;border-radius:8px;padding:12px 14px;background:var(--bg);color:var(--body)}
+  .status.error{background:#FCE4E4;color:#8A1C12}
+  .contact{border-top:1px solid #E6ECEF;padding-top:20px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+  .contact strong{color:var(--body);font-weight:500}
+  footer{flex:1 1 100%;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding:20px 72px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);background:#fff}
+  details summary{cursor:pointer;color:var(--teal-text)}
+  details p{max-width:720px;line-height:1.7;margin:8px 0 0}
+
+  /* 시스템 선택 화면 */
+  .topbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:16px 48px;background:var(--navy)}
+  .topbar img{height:56px}
+  .topbar .who{display:flex;flex-wrap:wrap;align-items:center;gap:16px;color:#C9D6DD;font-size:14px}
+  .btn-ghost{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1px solid #3C5A6B;border-radius:8px;background:transparent;color:#fff;font:inherit;font-size:14px;cursor:pointer}
+  main.wrap{width:100%;max-width:1200px;margin:0 auto;padding:56px 32px 72px;display:flex;flex-direction:column;gap:32px}
+  main.wrap h1{margin:0;font-size:32px;color:var(--ink)}
+  main.wrap .sub{margin:8px 0 0;font-size:16px;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+  .sys{display:flex;flex-direction:column;gap:20px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:32px;min-height:280px}
+  .sys .head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .sys .code{font-family:Barlow,sans-serif;font-weight:600;font-size:30px;letter-spacing:.02em;color:var(--teal-text)}
+  .sys.off .code{color:#8A939A}
+  .badge{padding:6px 12px;border-radius:999px;font-size:13px;font-weight:500;background:#E3F5F5;color:#12605F}
+  .sys.off .badge,.sys.wait .badge{background:#EEF1F3;color:var(--muted)}
+  .sys h2{margin:0;font-size:20px;color:var(--ink)}
+  .sys .en{margin:6px 0 0;font-size:14px;font-weight:500;color:var(--muted)}
+  .sys .body{flex:1 1 auto}
+  .go{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:10px;background:var(--navy);color:#fff;font-size:15px;font-weight:500;text-decoration:none}
+  .go:hover{color:#fff;background:#14384C}
+  .go.secondary{background:#fff;border:1px solid #C4CDD3;color:var(--body)}
+  .go.disabled{background:#EEF1F3;color:var(--muted);cursor:default}
+  .note{margin:0;font-size:13px;color:var(--muted)}
+
+  /* 권한 없음 화면 */
+  .center{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px 24px}
+  .center .card{max-width:520px;gap:24px}
+  .center .mark{width:96px}
+  .box{display:flex;flex-direction:column;gap:6px;background:var(--bg);border-radius:10px;padding:16px 18px;font-size:14px}
+  .row{display:flex;flex-wrap:wrap;gap:12px}
+  .row > *{flex:1 1 160px}
+  button.go{border:0;font:inherit;font-size:15px;font-weight:500;cursor:pointer}
+
+  @media (max-width:640px){
+    .hero{padding:40px 28px}.hero h1{font-size:32px}
+    .panel{padding:40px 20px}.card{padding:36px 24px}
+    footer{padding:20px 28px}.topbar{padding:14px 20px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ① 로그인 -->
+<section id="view-login" class="login" aria-labelledby="login-title">
+  <div class="hero">
+    <img class="deco" src="assets/w1-symbol.svg" alt="" aria-hidden="true">
+    <img class="logo" src="assets/w1-oneclear-white.svg" alt="W1 OneClear">
+    <div class="copy">
+      <p class="eyebrow">BESPOKE CUSTOMS &amp; TRADE PLATFORM</p>
+      <h1>관세법인 더블유가 고객사를 위해<br>설계한 맞춤 플랫폼</h1>
+      <p class="lead">W1 OneClear는 관세법인 더블유가 직접 구축한 관세통상 전문 플랫폼 통합 채널입니다. 권한이 부여된 플랫폼으로 바로 연결됩니다.</p>
+    </div>
+    <p class="sign">Built &amp; operated by 관세법인 더블유</p>
+  </div>
+  <div class="panel">
+    <div class="card">
+      <img class="logo" src="assets/w1-oneclear-accent.svg" alt="W1 OneClear">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <h2 id="login-title">로그인</h2>
+        <p>관세법인 더블유에 등록된 Google 계정으로 로그인해 주세요.</p>
+      </div>
+      <div id="gbtn" aria-live="polite"></div>
+      <div id="login-status" class="status" role="status" hidden></div>
+      <div class="contact">
+        <strong>계정 등록 · 권한 문의</strong>
+        <span>관세법인 더블유 <a href="tel:025425444">02-542-5444</a> · <a href="mailto:aeo@wcustoms.com">aeo@wcustoms.com</a></span>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <span>© 관세법인 더블유 · W1 OneClear · <a href="privacy.html">개인정보처리방침</a></span>
+    <details>
+      <summary>개인정보 처리 안내</summary>
+      <p>W1 OneClear는 로그인 확인을 위해 Google 계정의 이메일 주소와 이름만 받습니다. 받은 정보는 관세법인 더블유가 부여한 이용 권한을 확인하고 접속 기록을 남기는 데에만 사용하며, 다른 목적으로 쓰거나 외부에 제공하지 않습니다. 문의: aeo@wcustoms.com</p>
+    </details>
+  </footer>
+</section>
+
+<!-- ② 시스템 선택 -->
+<section id="view-systems" hidden aria-labelledby="sys-title">
+  <header class="topbar">
+    <img src="assets/w1-oneclear-white.svg" alt="W1 OneClear">
+    <div class="who">
+      <span id="who-email"></span>
+      <button type="button" class="btn-ghost" data-action="logout">로그아웃</button>
+    </div>
+  </header>
+  <main class="wrap">
+    <div>
+      <h1 id="sys-title">안녕하세요, <span id="who-name"></span> 님</h1>
+      <p class="sub"><span id="who-company"></span>이용 권한이 있는 플랫폼을 선택해 주세요.</p>
+    </div>
+    <div id="sys-grid" class="grid"></div>
+    <p class="note">권한은 관세법인 더블유 담당 컨설턴트가 부여합니다. 문의: 02-542-5444 · aeo@wcustoms.com</p>
+  </main>
+</section>
+
+<!-- ③ 권한 없음 -->
+<section id="view-denied" class="center" hidden aria-labelledby="denied-title">
+  <div class="card">
+    <img class="mark" src="assets/w1-mark.svg" alt="W1">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h2 id="denied-title">접근 권한이 없습니다</h2>
+      <p id="denied-msg"></p>
+    </div>
+    <div class="box">
+      <strong style="color:var(--ink);font-weight:500">권한 등록 문의</strong>
+      <span>관세법인 더블유 담당 컨설턴트</span>
+      <span><a href="tel:025425444">02-542-5444</a> · <a href="mailto:aeo@wcustoms.com">aeo@wcustoms.com</a></span>
+    </div>
+    <div class="row">
+      <button type="button" class="go" data-action="logout">다른 계정으로 로그인</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  // ───────── 설정 ─────────
+  const CONFIG = {
+    CLIENT_ID: '180324320266-asq93t2b76an54bc153bk7p7rupfdn1d.apps.googleusercontent.com',
+    // Apps Script 웹 앱을 배포한 뒤 받은 /exec 주소를 넣어 주세요.
+    API_URL: 'https://script.google.com/macros/s/AKfycbwlXi56GWQ7FkwSXWMRhyo9kvG8z8hjmf3dQJWWXe9bGKS_Mc1wZU0S7sQi2Zzmocsd/exec'
+  };
+
+  // ───────── 화면 전환 ─────────
+  const views = ['login', 'systems', 'denied'];
+  function show(name) {
+    views.forEach(v => { document.getElementById('view-' + v).hidden = (v !== name); });
+    window.scrollTo(0, 0);
+  }
+  function setStatus(text, isError) {
+    const el = document.getElementById('login-status');
+    el.hidden = !text;
+    el.textContent = text || '';
+    el.classList.toggle('error', !!isError);
+  }
+
+  // ───────── Google 로그인 ─────────
+  function initGoogle() {
+    if (!window.google || !google.accounts || !google.accounts.id) { setTimeout(initGoogle, 150); return; }
+    google.accounts.id.initialize({
+      client_id: CONFIG.CLIENT_ID,
+      callback: onCredential,
+      auto_select: false,
+      cancel_on_tap_outside: true,
+      context: 'signin',
+      ux_mode: 'popup'
+    });
+    renderButton();
+  }
+  function renderButton() {
+    const box = document.getElementById('gbtn');
+    box.innerHTML = '';
+    const w = Math.min(340, box.clientWidth || 340);
+    google.accounts.id.renderButton(box, {
+      type: 'standard', theme: 'outline', size: 'large', shape: 'pill',
+      text: 'signin_with', logo_alignment: 'left', locale: 'ko', width: w
+    });
+  }
+
+  async function onCredential(resp) {
+    setStatus('권한을 확인하고 있습니다…');
+    if (CONFIG.API_URL.indexOf('https://script.google.com/') !== 0) {
+      setStatus('서버 주소(API_URL)가 아직 설정되지 않았습니다. 관리자에게 문의해 주세요.', true);
+      return;
+    }
+    try {
+      const res = await fetch(CONFIG.API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ credential: resp.credential })
+      });
+      const data = await res.json();
+      handleResult(data);
+    } catch (err) {
+      setStatus('서버에 연결하지 못했습니다. 잠시 후 다시 시도해 주세요.', true);
+    }
+  }
+
+  function handleResult(data) {
+    setStatus('');
+    if (data && data.ok) { renderSystems(data); show('systems'); return; }
+    const reason = data && data.reason;
+    if (reason === 'invalid_token') { setStatus('로그인 확인에 실패했습니다. 다시 로그인해 주세요.', true); return; }
+    const msg = document.getElementById('denied-msg');
+    msg.textContent = '';
+    const em = document.createElement('strong');
+    em.style.color = 'var(--ink)';
+    em.textContent = (data && data.email) || '로그인한 계정';
+    msg.append('로그인한 계정 ', em, reason === 'inactive'
+      ? '의 이용 권한이 중지되었거나 기간이 만료되었습니다.'
+      : '은 아직 W1 OneClear 이용 권한이 등록되지 않았습니다.');
+    show('denied');
+  }
+
+  // ───────── 시스템 카드 ─────────
+  const DESC = {
+    WAP: '단계별 진척 현황, 증빙자료 제출, 사후관리 기한 알림',
+    WFP: '원산지 판정·증명, 인증수출자 관리, 검증 대응',
+    WCP: '수출입 통관 진행 현황과 서류 관리'
+  };
+  function el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function renderSystems(data) {
+    document.getElementById('who-email').textContent = data.email || '';
+    document.getElementById('who-name').textContent = data.name || data.email || '';
+    document.getElementById('who-company').textContent = data.company ? data.company + ' · ' : '';
+    const grid = document.getElementById('sys-grid');
+    grid.innerHTML = '';
+    (data.systems || []).forEach(s => {
+      const state = !s.allowed ? 'off' : (s.ready ? 'on' : 'wait');
+      const card = el('article', 'sys ' + state);
+      const head = el('div', 'head');
+      head.append(el('span', 'code', s.code),
+        el('span', 'badge', state === 'on' ? '이용 가능' : state === 'wait' ? '준비 중' : '권한 없음'));
+      const body = el('div', 'body');
+      body.append(el('h2', null, s.name), el('p', 'en', s.en),
+        el('p', null, DESC[s.code] || ''));
+      body.lastChild.style.cssText = 'margin:8px 0 0;font-size:15px;line-height:1.6;color:var(--body)';
+      let action;
+      if (state === 'on') {
+        action = el('a', 'go', s.code + ' 들어가기');
+        action.href = s.url;
+        action.rel = 'noopener';
+      } else if (state === 'wait') {
+        action = el('span', 'go disabled', '오픈 준비 중');
+      } else {
+        action = el('a', 'go secondary', '이용 권한 문의');
+        action.href = 'mailto:aeo@wcustoms.com?subject=' + encodeURIComponent('[W1 OneClear] ' + s.code + ' 이용 권한 요청');
+      }
+      card.append(head, body, action);
+      grid.append(card);
+    });
+  }
+
+  // ───────── 로그아웃 ─────────
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-action="logout"]');
+    if (!t) return;
+    if (window.google && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect();
+    document.getElementById('sys-grid').innerHTML = '';
+    setStatus('');
+    show('login');
+    if (window.google && google.accounts && google.accounts.id) renderButton();
+  });
+
+  window.addEventListener('load', initGoogle);
+</script>
+</body>
+</html>
