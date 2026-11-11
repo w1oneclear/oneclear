@@ -71,6 +71,7 @@
   .go.secondary{background:#fff;border:1px solid #C4CDD3;color:var(--body)}
   .go.disabled{background:#EEF1F3;color:var(--muted);cursor:default}
   .note{margin:0;font-size:13px;color:var(--muted)}
+  .actions{display:flex;flex-direction:column;gap:10px}
 
   /* 권한 없음 화면 */
   .center{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px 24px}
@@ -264,7 +265,7 @@
     const grid = document.getElementById('sys-grid');
     grid.innerHTML = '';
     (data.systems || []).forEach(s => {
-      const state = !s.allowed ? 'off' : (s.ready ? 'on' : 'wait');
+      const state = !s.allowed ? 'off' : (s.ready && (s.links || []).length ? 'on' : 'wait');
       const card = el('article', 'sys ' + state);
       const head = el('div', 'head');
       head.append(el('span', 'code', s.code),
@@ -273,18 +274,22 @@
       body.append(el('h2', null, s.name), el('p', 'en', s.en),
         el('p', null, DESC[s.code] || ''));
       body.lastChild.style.cssText = 'margin:8px 0 0;font-size:15px;line-height:1.6;color:var(--body)';
-      let action;
+      const actions = el('div', 'actions');
       if (state === 'on') {
-        action = el('a', 'go', s.code + ' 들어가기');
-        action.href = s.url;
-        action.rel = 'noopener';
+        (s.links || []).forEach(l => {
+          const a = el('a', 'go', s.links.length > 1 || data.staff ? l.label + ' 들어가기' : s.code + ' 들어가기');
+          a.href = l.url;
+          a.rel = 'noopener';
+          actions.append(a);
+        });
       } else if (state === 'wait') {
-        action = el('span', 'go disabled', '오픈 준비 중');
+        actions.append(el('span', 'go disabled', s.note === '고객사 미지정' || s.note === '고객사 연결 확인 중' ? '고객사 연결 준비 중' : '오픈 준비 중'));
       } else {
-        action = el('a', 'go secondary', '이용 권한 문의');
-        action.href = 'mailto:aeo@wcustoms.com?subject=' + encodeURIComponent('[W1 OneClear] ' + s.code + ' 이용 권한 요청');
+        const a = el('a', 'go secondary', '이용 권한 문의');
+        a.href = 'mailto:aeo@wcustoms.com?subject=' + encodeURIComponent('[W1 OneClear] ' + s.code + ' 이용 권한 요청');
+        actions.append(a);
       }
-      card.append(head, body, action);
+      card.append(head, body, actions);
       grid.append(card);
     });
   }
